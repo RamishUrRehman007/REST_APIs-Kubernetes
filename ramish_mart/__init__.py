@@ -45,5 +45,8 @@ from ramish_mart.models import (products_model)
 # Initialize Models
 
 # --- import views
-from ramish_mart.views import(test)
+from ramish_mart.views import(
+                            test,
+                            products
+                        )
 # --- import views
