@@ -1,7 +1,10 @@
 from flask import Flask
 from flask_log_request_id import RequestID, RequestIDLogFilter
+from flask_sqlalchemy import SQLAlchemy
 from logging.handlers import TimedRotatingFileHandler
 import logging, os
+from ramish_mart.config import config
+
 
 app = Flask(__name__)
 
@@ -28,6 +31,18 @@ for handler in handlers:
     handler.addFilter(RequestIDLogFilter())
     app.log.addHandler(handler)
 # --- set app logger
+
+# --- Connect to DB
+config_manager = config.register_config_manager()
+DB_URI = "postgresql://"+config_manager.get("USERNAME")+":"+config_manager.get("PASSWORD")+"@"+config_manager.get("HOST_URL")+":"+config_manager.get("PORT")+"/"+config_manager.get("DATABASE_NAME")
+app.config["SQLALCHEMY_DATABASE_URI"] = DB_URI
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app)
+# --- Connect to DB
+
+# Initialize Models
+from ramish_mart.models import (products_model)
+# Initialize Models
 
 # --- import views
 from ramish_mart.views import(test)

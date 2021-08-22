@@ -1,4 +1,8 @@
 Flask==1.1.2
 Flask-Log-Request-ID==0.10.1
 Flask-WTF==0.14.3
+Flask-SQLAlchemy==2.5.1
+pyconfigmanager==0.2.7a0
+psycopg2==2.9.1
 requests==2.24.0
+SQLAlchemy==1.4.22
