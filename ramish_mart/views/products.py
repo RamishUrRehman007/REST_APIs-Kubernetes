@@ -7,7 +7,7 @@ from ramish_mart.services import products_service
 from ramish_mart.utils import utils
 
 @cross_origin
-@app.route("/products", methods=["POST"])
+@app.route("/products", methods=["POST", "DELETE", "PATCH"])
 def products():
     if request.method == "POST":
         data  = utils.posted()
@@ -27,3 +27,41 @@ def products():
                         utils.form_response(400, 'Keys are missing', None)
                     ) 
 
+    elif request.method == "DELETE":
+        product_id = request.args.get('product_id', None)
+
+        if product_id:
+            product = products_service.deleteProduct(product_id)
+            return jsonify(
+                        utils.form_response(200, None, product)
+                    ) 
+        else:
+            return jsonify(
+                        utils.form_response(400, 'Query Param is missing-product_id', None)
+                    ) 
+    
+    elif request.method == "PATCH":
+        product_id = request.args.get('product_id', None)
+
+        if product_id:
+            fields_to_be_updated  = utils.posted()
+            if fields_to_be_updated:
+                product = products_service.updateProduct(
+                                            product_id, fields_to_be_updated
+                                        )
+                if product == False:
+                    return jsonify(
+                            utils.form_response(403, 'Trying to update forbidden fields', None)
+                        )
+                
+                return jsonify(
+                            utils.form_response(200, None, product)
+                        ) 
+            else:
+                return jsonify(
+                            utils.form_response(400, 'Json Data is missing', None)
+                        ) 
+        else:
+            return jsonify(
+                        utils.form_response(400, 'Query Param is missing-product_id', None)
+                    ) 

@@ -21,3 +21,39 @@ def addProduct(name, price):
     
     except Exception as e:
         return {'Message': str(e)}
+
+def deleteProduct(product_id):
+
+    try:
+        Products.query.filter_by(
+                        id=product_id
+                    ).delete()
+        db.session.commit()
+        
+        return {'Message': "Product Deleted Successfully"}
+    
+    except Exception as e:
+        return {'Message': str(e)}
+
+def updateProduct(product_id, fields_to_be_updated):
+
+    try:
+        if 'id' in list(fields_to_be_updated.keys()) or  'created' in list(fields_to_be_updated.keys()):
+            return False
+        print(fields_to_be_updated)
+        
+        Products.query.filter_by(
+                        id=product_id
+                    ).update(fields_to_be_updated)
+        db.session.commit()
+        
+        product = utils.single_object_to_dict(
+                        Products.query.filter_by(id=product_id).first()
+                    )
+        
+        return {'Message': "Product Updated Successfully" , 'Product' : product}
+    
+    except Exception as e:
+        return {'Message': str(e)}
+
+
