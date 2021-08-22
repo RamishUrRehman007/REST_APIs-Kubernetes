@@ -40,7 +40,6 @@ def updateProduct(product_id, fields_to_be_updated):
     try:
         if 'id' in list(fields_to_be_updated.keys()) or  'created' in list(fields_to_be_updated.keys()):
             return False
-        print(fields_to_be_updated)
         
         Products.query.filter_by(
                         id=product_id
@@ -57,3 +56,14 @@ def updateProduct(product_id, fields_to_be_updated):
         return {'Message': str(e)}
 
 
+def getProductByName(product_name):
+
+    try:
+        product = utils.single_object_to_dict(
+                        get_product_object(product_name)
+                    )
+        
+        return {'Message': "Product Fetched Successfully" , 'Product' : product}
+    
+    except Exception as e:
+        return {'Message': str(e)}

@@ -7,7 +7,7 @@ from ramish_mart.services import products_service
 from ramish_mart.utils import utils
 
 @cross_origin
-@app.route("/products", methods=["POST", "DELETE", "PATCH"])
+@app.route("/products", methods=["GET", "POST", "DELETE", "PATCH"])
 def products():
     if request.method == "POST":
         data  = utils.posted()
@@ -26,6 +26,19 @@ def products():
             return jsonify(
                         utils.form_response(400, 'Keys are missing', None)
                     ) 
+
+    elif request.method == "GET":
+        product_name = request.args.get('name', None)
+        
+        if product_name:
+            product = products_service.getProductByName(product_name)
+            return jsonify(
+                        utils.form_response(200, None, product)
+                    )
+        else:
+            return jsonify(
+                        utils.form_response(400, 'Query Param is missing-name', None)
+                    )
 
     elif request.method == "DELETE":
         product_id = request.args.get('product_id', None)
