@@ -21,3 +21,16 @@ def addProduct(name, price):
     
     except Exception as e:
         return {'Message': str(e)}
+
+def deleteProduct(product_id):
+
+    try:
+        Products.query.filter_by(
+                        id=product_id
+                    ).delete()
+        db.session.commit()
+        
+        return {'Message': "Product Deleted Successfully"}
+    
+    except Exception as e:
+        return {'Message': str(e)}
