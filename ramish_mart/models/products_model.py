@@ -13,3 +13,6 @@ class Products(db.Model):
         self.price = price
 
 db.create_all()
+
+def get_product_object(name):
+    return Products.query.filter_by(name=name).first()
