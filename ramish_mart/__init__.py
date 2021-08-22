@@ -28,3 +28,7 @@ for handler in handlers:
     handler.addFilter(RequestIDLogFilter())
     app.log.addHandler(handler)
 # --- set app logger
+
+# --- import views
+from ramish_mart.views import(test)
+# --- import views
