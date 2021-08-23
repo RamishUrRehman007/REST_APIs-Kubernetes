@@ -3,7 +3,10 @@ Flask-Cors==1.1.1
 Flask-Log-Request-ID==0.10.1
 Flask-WTF==0.14.3
 Flask-SQLAlchemy==2.5.1
+flask-prometheus-metrics==1.0.0
+prometheus-client==0.11.0
 pyconfigmanager==0.2.7a0
 psycopg2==2.9.1
 requests==2.24.0
 SQLAlchemy==1.4.22
+Werkzeug==0.16.0
