@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_log_request_id import RequestID, RequestIDLogFilter
+from flask_swagger_ui import get_swaggerui_blueprint
 from flask_sqlalchemy import SQLAlchemy
 from logging.handlers import TimedRotatingFileHandler
 import logging, os
@@ -50,3 +51,21 @@ from ramish_mart.views import(
                             products
                         )
 # --- import views
+
+# --- swagger specific
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "Ramish-Test"
+    }
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+# --- swagger specific
+
+#  docker build -t ramish-test .
+#  docker-compose up --build -d  
+# kubectl apply -f deployment.yaml
+# kubectl rollout restart deployment 
