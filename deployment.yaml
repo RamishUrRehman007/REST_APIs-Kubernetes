@@ -50,7 +50,7 @@ metadata:
     app: "postgres"
 data:
   POSTGRES_DB: "ramish_mart"
-  POSTGRES_USER: "postgres"
+  POSTGRES_USER: "ramish"
   POSTGRES_PASSWORD: "ramish534"
 
 
@@ -63,7 +63,7 @@ metadata:
   labels:
     app: "postgres"
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: "postgres"
@@ -74,7 +74,7 @@ spec:
     spec:
       containers:
       - name: "postgres"
-        image: "postgres:latest"
+        image: "postgres:9.6.2"
         env:
         - name: "POSTGRES_DB"
           valueFrom:
