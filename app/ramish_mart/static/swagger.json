@@ -1,0 +1,210 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "Ramish",
+      "version": "1.0.0",
+      "title": "Ramish-Test",
+      "contact": {
+        "email": "ramish534@outlook.com"
+      },
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "servers": [
+      {
+        "url": "/"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Products",
+        "description": "Example API for requesting and return products"
+      }
+    ],
+    "paths": {
+      "/products": {
+        "post": {
+          "tags": [
+            "Products"
+          ],
+          "summary": "Create a new Product",
+          "requestBody": {
+            "description": "Product Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productPostBody"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Product Added Successfully",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            "400": {
+              "description": "Keys are missing"
+            }
+          }
+        },
+        "get": {
+          "tags": [
+            "Products"
+          ],
+          "summary": "Get Product details with given Name",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "name",
+              "required": true,
+              "description": "Name of the Product that we want to fetch",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product Fetched Successfully",
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "400": {
+              "description": "Failed. Query Param is missing-name."
+            }
+          }
+        },
+        "patch": {
+          "summary": "Update the Product by ID",
+          "tags": [
+            "Products"
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "product_id",
+              "required": true,
+              "description": "Product ID",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Product Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productPostBody"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Product Updated Successfully",
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "400": {
+              "description": "Failed. Json Data is missing or Query Param is missing-product_id."
+            },
+            "403": {
+              "description": "Trying to update forbidden fields."
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete Product by ID",
+          "tags": [
+            "Products"
+          ],
+          "parameters": [
+            {
+              "in": "query",
+              "name": "product_id",
+              "required": true,
+              "description": "Product ID",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Product Deleted Successfully",
+              "schema": {
+                "$ref": "#/components/schemas/product"
+              }
+            },
+            "400": {
+              "description": "Failed. Query Param is missing-product_id."
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "id": {
+          "properties": {
+            "uuid": {
+              "type": "string"
+            }
+          }
+        },
+        "productPostBody": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "format": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "number"
+            }
+          }
+        },
+        "product": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "format": "string"
+            },
+            "price": {
+              "type": "number",
+              "format": "number"
+            }
+          }
+        },
+        "products": {
+          "type": "object",
+          "properties": {
+            "product": {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/components/schemas/product"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

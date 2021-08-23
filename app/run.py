@@ -2,6 +2,10 @@
 from ramish_mart import app
 import os
 import sys
+from prometheus_client import make_wsgi_app
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.serving import run_simple
+from flask_prometheus_metrics import register_metrics
 # --- core python imports
 
 
@@ -31,9 +35,17 @@ def _run():
     """ Imports the app and runs it. """
     from ramish_mart import app
 
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    # provide app's version and deploy environment/config name to set a gauge metric
+    register_metrics(app, app_version="v1.0", app_config="staging")
+
+    # Plug metrics WSGI app to your main app with dispatcher
+    dispatcher = DispatcherMiddleware(app.wsgi_app, {"/metrics": make_wsgi_app()})
+
+    run_simple(hostname="0.0.0.0", port=5000, application=dispatcher)
+
+    # app.run(debug=True, host="0.0.0.0", port=5000)
 
 
 if __name__ == '__main__':
-    # _activate() Uncomment this if you want to execute with virtualenv but before that first create it. 
+    # _activate() Uncomment this if you want to execute with virtualenv and dont have docker container but before that first create it. 
     _run()

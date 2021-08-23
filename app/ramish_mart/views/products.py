@@ -21,11 +21,11 @@ def products():
 
             return jsonify(
                         utils.form_response(200, None, product)
-                    ) 
+                    ), 200 
         else:
             return jsonify(
                         utils.form_response(400, 'Keys are missing', None)
-                    ) 
+                    ), 400
 
     elif request.method == "GET":
         product_name = request.args.get('name', None)
@@ -34,11 +34,11 @@ def products():
             product = products_service.getProductByName(product_name)
             return jsonify(
                         utils.form_response(200, None, product)
-                    )
+                    ), 200
         else:
             return jsonify(
                         utils.form_response(400, 'Query Param is missing-name', None)
-                    )
+                    ), 400
 
     elif request.method == "DELETE":
         product_id = request.args.get('product_id', None)
@@ -47,11 +47,11 @@ def products():
             product = products_service.deleteProduct(product_id)
             return jsonify(
                         utils.form_response(200, None, product)
-                    ) 
+                    ), 200
         else:
             return jsonify(
                         utils.form_response(400, 'Query Param is missing-product_id', None)
-                    ) 
+                    ), 400
     
     elif request.method == "PATCH":
         product_id = request.args.get('product_id', None)
@@ -65,16 +65,16 @@ def products():
                 if product == False:
                     return jsonify(
                             utils.form_response(403, 'Trying to update forbidden fields', None)
-                        )
+                        ), 403
                 
                 return jsonify(
                             utils.form_response(200, None, product)
-                        ) 
+                        ), 200
             else:
                 return jsonify(
                             utils.form_response(400, 'Json Data is missing', None)
-                        ) 
+                        ), 400
         else:
             return jsonify(
                         utils.form_response(400, 'Query Param is missing-product_id', None)
-                    ) 
+                    ) , 400
