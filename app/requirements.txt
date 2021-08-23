@@ -1,4 +1,5 @@
 Flask==1.1.2
+Flask-Cors==1.1.1
 Flask-Log-Request-ID==0.10.1
 Flask-WTF==0.14.3
 Flask-SQLAlchemy==2.5.1
