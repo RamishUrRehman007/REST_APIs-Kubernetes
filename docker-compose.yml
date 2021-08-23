@@ -1,24 +1,8 @@
-version: '3.5'
-services:
-  database:
-    container_name: postgres
-    image: postgres:latest
-    environment:
-      # To avoid the following error:
-      #
-      #   Error: Database is uninitialized and superuser password is not
-      #   specified.  You must specify POSTGRES_PASSWORD for the superuser. Use
-      #   "-e POSTGRES_PASSWORD=password" to set it in "docker run".
-      #
-      #   You may also use POSTGRES_HOST_AUTH_METHOD=trust to allow all
-      #   connections without a password. This is *not* recommended. See
-      #   PostgreSQL documentation about "trust"
-      POSTGRES_HOST_AUTH_METHOD: trust
-    env_file: database.conf
+version: "3"  
+services:  
+  prometheus:
+    image: prom/prometheus:latest
     ports:
-      - 5432:5432  
+      - "9090:9090"
     volumes:
-      - db_volume:/var/lib/postgresql
-
-volumes:
-  db_volume:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
