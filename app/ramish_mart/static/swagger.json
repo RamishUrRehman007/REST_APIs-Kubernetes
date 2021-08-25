@@ -95,6 +95,9 @@
             },
             "400": {
               "description": "Keys are missing"
+            },
+            "401": {
+              "description": "Missing Authorization Header"
             }
           }
         },
@@ -123,6 +126,9 @@
             },
             "400": {
               "description": "Failed. Query Param is missing-name."
+            },
+            "401": {
+              "description": "Missing Authorization Header"
             }
           }
         },
@@ -166,6 +172,9 @@
             "400": {
               "description": "Failed. Json Data is missing or Query Param is missing-product_id."
             },
+            "401": {
+              "description": "Missing Authorization Header"
+            },
             "403": {
               "description": "Trying to update forbidden fields."
             }
@@ -196,6 +205,9 @@
             },
             "400": {
               "description": "Failed. Query Param is missing-product_id."
+            },
+            "401": {
+              "description": "Missing Authorization Header"
             }
           }
         }
