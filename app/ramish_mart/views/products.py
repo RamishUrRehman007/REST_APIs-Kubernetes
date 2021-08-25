@@ -1,5 +1,6 @@
 from flask import jsonify
 from flask_cors import cross_origin
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask.globals import request
 
 from ramish_mart import app
@@ -8,6 +9,7 @@ from ramish_mart.utils import utils
 
 @cross_origin
 @app.route("/products", methods=["GET", "POST", "DELETE", "PATCH"])
+@jwt_required()
 def products():
     if request.method == "POST":
         data  = utils.posted()

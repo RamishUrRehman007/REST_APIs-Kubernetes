@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_jwt_extended import JWTManager
 from flask_log_request_id import RequestID, RequestIDLogFilter
 from flask_swagger_ui import get_swaggerui_blueprint
 from flask_sqlalchemy import SQLAlchemy
@@ -8,6 +9,11 @@ from ramish_mart.config import config
 
 
 app = Flask(__name__)
+
+# --- Setup the Flask-JWT-Extended extension
+app.config["JWT_SECRET_KEY"] = "ramish-secret"  # Change this "ramish secret" with something else!
+jwt = JWTManager(app)
+# --- Setup the Flask-JWT-Extended extension
 
 # --- set app logger
 ramish_mart_LOG_LEVEL = logging.DEBUG
@@ -41,6 +47,11 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 # --- Connect to DB
 
+# --- Set Username and Password for JWT 
+username = config_manager.get("USERNAME")
+password = config_manager.get("PASSWORD")
+# --- Set Username and Password for JWT
+
 # Initialize Models
 from ramish_mart.models import (products_model)
 # Initialize Models
@@ -48,7 +59,8 @@ from ramish_mart.models import (products_model)
 # --- import views
 from ramish_mart.views import(
                             test,
-                            products
+                            products,
+                            login
                         )
 # --- import views
 
