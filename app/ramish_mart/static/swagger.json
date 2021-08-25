@@ -19,13 +19,55 @@
     ],
     "tags": [
       {
+        "name": "LoginForJWT",
+        "description": "Login to retrieve the JWT token and use for other routes"
+      },
+      {
         "name": "Products",
         "description": "Example API for requesting and return products"
       }
     ],
     "paths": {
+      "/login":{
+        "post": {
+          "tags": [
+            "LoginForJWT"
+          ],
+          "summary": "Authenticate the user",
+          "requestBody": {
+            "description": "Login Post Object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/login"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Authenticated, Token Generated",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            "401": {
+              "description": "Bad Username or Password"
+            }
+          }
+        }
+      },
       "/products": {
         "post": {
+          "security": [
+            {
+               "bearerAuth": []
+            }
+         ],
           "tags": [
             "Products"
           ],
@@ -160,6 +202,13 @@
       }
     },
     "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
       "schemas": {
         "id": {
           "properties": {
@@ -178,6 +227,19 @@
             "price": {
               "type": "number",
               "format": "number"
+            }
+          }
+        },
+        "login": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "format": "string"
+            },
+            "password": {
+              "type": "string",
+              "format": "string"
             }
           }
         },
