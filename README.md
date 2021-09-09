@@ -1,5 +1,5 @@
-# ramish-test
-Kubernetes and Prometheus and Python and Flask. 24 hours x $8.
+# ramish-project
+Python, Flask, Swagger, JWT, Pytest, Postgresql,Docker, Kubernetes and Prometheus.
 
 #### Flask
 Flask is a micro web framework written in Python because it does not require particular tools or libraries as it aims to keep the core simple but extensible.
